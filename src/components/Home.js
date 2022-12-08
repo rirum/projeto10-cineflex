@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 
 export default function Home(){
 const [movies, setMovies] = useState(undefined);
+
 
     useEffect(() => {
         const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
@@ -16,7 +18,7 @@ const [movies, setMovies] = useState(undefined);
     )
 
  if (movies === undefined) {
-    return <img align="center" src="../assets/loading.gif" alt="loading"/>;
+    return <img align="center" src="./assets/loading.gif" alt="loading"/>;
  }
 
 
@@ -29,9 +31,11 @@ const [movies, setMovies] = useState(undefined);
                 <ContainerMovies>
 
                     {movies.map(movie => (
-                    <StyledMovies key={movie.id} data-test="movie">
-                    <img src={movie.posterURL} alt={movie.title}/>
-                    </StyledMovies>
+                    <Link to={`/sessoes/${movie.id}`}>
+                        <StyledMovies key={movie.id} data-test="movie">
+                        <img src={movie.posterURL} alt={movie.title}/>
+                        </StyledMovies>
+                    </Link>
                     ))}
                     
                 </ContainerMovies>
