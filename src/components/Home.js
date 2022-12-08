@@ -1,32 +1,35 @@
 import styled from "styled-components";
-import StyledHeader from "./Header";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 
 export default function Home(){
-const [movies, setMovies] = useState([]);
+const [movies, setMovies] = useState(undefined);
 
     useEffect(() => {
         const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
         const promise = axios.get(URL);
         promise.then(response => setMovies(response.data));
-        promise.catch(error => console.log(error.response.data));
+        promise.catch(error => console.log(error));
     } ,[]
     
     )
 
+ if (movies === undefined) {
+    return <img align="center" src="../assets/loading.gif" alt="loading"/>;
+ }
+
 
     return (
         <HomeContainer>
-                <StyledHeader/>
+                
                 <StyledText>
                     Selecione o filme
                 </StyledText>
                 <ContainerMovies>
 
                     {movies.map(movie => (
-                    <StyledMovies key={movie.id}>
+                    <StyledMovies key={movie.id} data-test="movie">
                     <img src={movie.posterURL} alt={movie.title}/>
                     </StyledMovies>
                     ))}
