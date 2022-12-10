@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function Sessions(){
     const { idFilme } = useParams() 
-    const [session, setSession ] = useState({});
+    const [session, setSession ] = useState(undefined);
 
     useEffect(()=> {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`);
@@ -16,6 +16,9 @@ export default function Sessions(){
         promise.catch ((error)=> console.log(error))
     })
 
+    if (session === undefined) {
+        return <img align="center" src="./assets/loading.gif" alt="loading"/>;
+    }
     return (
         <>
         <StyledText>
@@ -24,14 +27,21 @@ export default function Sessions(){
         </StyledText>
         {session.days.map(data => (
             <>
-             <TextSession>{data.weekday} - {data.date}</TextSession>
-                <ButtonSession><p>{data.showtimes.name}</p></ButtonSession>
+             <TextSession key={data.id}>{data.weekday} - {data.date}</TextSession>
+              <HourSession key={data.name}><p>{data.showtimes.name}</p></HourSession>
             </>
+            
             ))}
-            </>
-
-    )
+      
+               <>
+                <Footer> poster + nome filme</Footer>
+                
+                </>
+    
+         </>
+    )     
 }
+
 
 
 const StyledText = styled.div`
@@ -49,13 +59,35 @@ const TextSession = styled.div`
 font-family: 'Roboto', sans-serif;
 font-size: 20px;
 color: #293845;
+margin-bottom: 22px;
+margin-top: 22px;
+align-items: center;
+display: flex;
+justify-content: center;
 
 `
 
-const ButtonSession = styled.div`
+const HourSession = styled.div`
 width: 83px;
 height: 43px;
-background-color: pink;
-p{
-    color: white;}
+background-color: #e8833a;
+display: flex;
+justify-content: center;
+font-family: 'Roboto', sans-serif;
+color: white;
+font-size: 18px;
+margin: 0 auto;
+border-radius: 3px;
+`
+
+const Footer = styled.div`
+width: 100%;
+height: 117px;
+background-color: #9EADBA;
+color: #293845;
+position: sticky;
+bottom: 0px;
+left: 0px;
+font-family:'Roboto', sans-serif;
+font-size:26px;
 `
