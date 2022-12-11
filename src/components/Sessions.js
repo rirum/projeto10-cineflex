@@ -9,7 +9,7 @@ import axios from "axios";
 export default function Sessions(){
     const { idFilme } = useParams() 
     const [session, setSession ] = useState(undefined);   
-    // const { weekday, date, showtimes } = sessionData; 
+    
 
     useEffect(()=> {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`);
@@ -31,14 +31,14 @@ export default function Sessions(){
         {session.days.map(day => (
             <>
             <ContainerText>
-             <TextSession key={day.id}>{day.weekday} - {day.date}</TextSession>
+             <TextSession data-test="movie-day" key={day.id}>{day.weekday} - {day.date}</TextSession>
              </ContainerText>
              
                 <ContainerHour>
              { 
                 day.showtimes.map(showTime => (
                     <Link to={`/assentos/${showTime.id}`} style={{ textDecoration: 'none' }}>
-                        <HourSession key={showTime.id}><p> { showTime.name } </p> </HourSession>
+                        <HourSession data-test="showtime" key={showTime.id}><p> { showTime.name } </p> </HourSession>
                     </Link>
                 )) 
              }
@@ -48,7 +48,7 @@ export default function Sessions(){
             ))}
       
                <ContainerFooter>
-                <Footer><img src={session.posterURL} alt={session.title}/> { session.title } </Footer>
+                <Footer data-test="footer"><img src={session.posterURL} alt={session.title}/> { session.title } </Footer>
                 
                 </ContainerFooter>
     

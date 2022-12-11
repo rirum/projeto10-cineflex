@@ -9,16 +9,6 @@ import Success from "./components/Success";
 function App() {
 
   const [ticket, setTicket] = useState({})
-  // const [selectedSeats, setSelectedSeats] = useState([]);
-
-  // //Faz o click em cada componente Seat
-  // function handleSeat(seat) {
-  //   //Aqui o seat é o próprio objeto que disparou o onClick
-  //   if (seat.status === "unavailable") {
-  //     return;
-  //   }
-
-  // }
 
 
   return (
@@ -29,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/sessoes/:idFilme" element={<Sessions />}/>
-            <Route path="/assentos/:idSessao" element={<Seats  setTicket={setTicket} ticket={ticket}/>} />
+            <Route path="/assentos/:idSessao" element={<Seats  setTicket={setTicket} />} />
             <Route path="/sucesso/" element={<Success ticket={ticket} setTicket={setTicket}/>} />
           
           </Routes>

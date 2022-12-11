@@ -5,14 +5,14 @@ import React, { useEffect, useState } from "react";
 
 
 
-export default function Seats({setTicket, ticket}) {
+export default function Seats({setTicket}) {
 
     const { idSessao } = useParams();
     const [ seat, setSeat ] = useState(undefined);
     const [ name, setName ] = useState('');
     const [ cpf, setCpf ] = useState('');
-    const [ movie, setMovie ] = useState ({posterURL: "", title: "", date: ""});
-    const [ day, setDay ] = useState ({date: "", weekday:""});
+    const [ movie, setMovie ] = useState ({});
+    const [ day, setDay ] = useState ({});
     const [ seatSelected, setSeatSelected ] = useState([]);
     
     const navigate = useNavigate();  
@@ -51,11 +51,22 @@ export default function Seats({setTicket, ticket}) {
         e.preventDefault();
         const body = { ids:seatSelected, name: name, cpf: cpf };
         console.log(body);
+        const ticket = {
+            ids:seatSelected,
+            name: name,
+            cpf: cpf,
+            day: day.date,
+            title: movie.title,
+            weekday: day.weekday,
+        }
         const promise = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', body);
         promise.then (() => {
             if(seatSelected.length !== 0) {
                 navigate('/sucesso');
                 setTicket(ticket);
+                console.log(ticket + 'ticket');
+            } else {
+                alert("Você não escolheu um assento")
             }
         })
         promise.catch('Erro na requisição');
@@ -96,7 +107,7 @@ export default function Seats({setTicket, ticket}) {
             <ContainerNome htmlFor="name">
             <p>Nome do Comprador:</p>
             <input 
-            data-test='client-name'
+            data-test="client-name"
             id="name"
             onChange={e => setName(e.target.value)} 
             placeholder="Digite seu nome..." 
@@ -107,7 +118,7 @@ export default function Seats({setTicket, ticket}) {
             <ContainerCPF htmlFor="cpf">
             <p>CPF do Comprador:</p>
             <input 
-            data-test='client-cpf'
+            data-test="client-cpf"
             id="cpf"
             onChange={e => setCpf(e.target.value)} 
             placeholder="Digite seu CPF..." 
@@ -122,7 +133,7 @@ export default function Seats({setTicket, ticket}) {
         
                 <ContainerFooter>
                   
-                <Footer title={movie.title}> <img src={`${movie.posterURL}`} alt={movie.title}/> 
+                <Footer data-test="footer"  title={movie.title}> <img src={`${movie.posterURL}`} alt={movie.title}/> 
                 <TextAlign>
                 <h1>{`${movie.title}`}</h1>
                 <h2>{`${day.weekday} - ${day.date}`} </h2>
