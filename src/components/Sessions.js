@@ -34,11 +34,11 @@ export default function Sessions(){
              <TextSession data-test="movie-day" key={day.id}>{day.weekday} - {day.date}</TextSession>
              </ContainerText>
              
-                <ContainerHour>
+                <ContainerHour data-test="showtime">
              { 
                 day.showtimes.map(showTime => (
                     <Link to={`/assentos/${showTime.id}`} style={{ textDecoration: 'none' }}>
-                        <HourSession data-test="showtime" key={showTime.id}><p> { showTime.name } </p> </HourSession>
+                        <HourSession  key={showTime.id}><p> { showTime.name } </p> </HourSession>
                     </Link>
                 )) 
              }
