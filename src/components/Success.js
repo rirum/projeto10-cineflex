@@ -18,11 +18,11 @@ export default function Success(ticket, setTicket) {
             <p>{ticket.weekday} - {ticket.day}</p>
         </MovieInfo>
         <SeatsInfo data-test="seats-info">
-
+        <h1>Ingressos:</h1>
         </SeatsInfo>
 
         <ClientInfo data-test="client-info">
-
+        <h1>Comprador:</h1> 
         </ClientInfo>
 
         <BackButton data-test="go-home-btn" onClick={returnHome}>
@@ -49,6 +49,35 @@ justify-content: center;
 height: 110px;
 `
 const MovieInfo = styled.div`
+font-family: 'Roboto', sans-serif;
+width: 374px;
+height: 110px;
+h1{
+    color: #293845;
+    font-weight: 700;
+    font-size: 24px;
+}
+p{
+    color: #293845;
+    font-size: 22px;
+}
+`
+const SeatsInfo = styled.div`
+font-family: 'Roboto', sans-serif;
+width: 374px;
+height: 110px;
+h1{
+    color: #293845;
+    font-weight: 700;
+    font-size: 24px;
+}
+p{
+    color: #293845;
+    font-size: 22px;
+}
+`
+
+const ClientInfo = styled.div`
 font-family: 'Roboto', sans-serif;
 width: 374px;
 height: 110px;
