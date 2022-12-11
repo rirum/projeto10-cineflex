@@ -72,10 +72,13 @@ export default function Seats({setTicket, ticket}) {
             {
                 seat.seats.map((assento, id) => (
                     <StyledSeats 
+                    active={seatSelected.includes(assento.id)}
+                    corAssento={assento.isAvailable}
+                    key={assento.name}
                     name={assento.name} 
                     id={id+1}
                     data-test="seat" 
-                    onClick={() => selected(id+1, assento.isAvailable)}
+                    onClick={() => assento.isAvailable ? selected(assento.id) : alert("Esse assento não está disponível")}
                     seatSelected={seatSelected}
                     className={assento.isAvailable ? 'unavailable' : 'available'}> { assento.name } </StyledSeats>
                 ))                
@@ -166,7 +169,7 @@ const StyledSeats = styled.button`
 width: 26px;
 height: 26px;
 border-radius: 12px;
-background-color: ${(props)=> props.seatSelected.includes((props.id))? '#1AAE9E' : "#C3CFD9"};
+background-color: ${(props) => props.active ? "#1AAE9E" : props.corAssento ? "#C3CFD9" : "#F7C52B"};
 border: 1px solid #808f9d;
 align-items: center;
 font-family: "Roboto", sans-serif;
