@@ -103,7 +103,7 @@ gap: 9px;
 
 `
 
-const HourSession = styled.div`
+const HourSession = styled.button`
 width: 83px;
 height: 43px;
 background-color: #e8833a;
