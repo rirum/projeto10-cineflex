@@ -19,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/sessoes/:idFilme" element={<Sessions />}/>
-            <Route path="/assentos/:idSessao" element={<Seats  setTicket={setTicket} />} />
+            <Route path="/assentos/:idSessao" element={<Seats  ticket={ticket} setTicket={setTicket} />} />
             <Route path="/sucesso/" element={<Success ticket={ticket} setTicket={setTicket}/>} />
           
           </Routes>

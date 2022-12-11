@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 
 
-export default function Seats({setTicket}) {
+export default function Seats({ticket, setTicket}) {
 
     const { idSessao } = useParams();
     const [ seat, setSeat ] = useState(undefined);
@@ -14,6 +14,7 @@ export default function Seats({setTicket}) {
     const [ movie, setMovie ] = useState ({});
     const [ day, setDay ] = useState ({});
     const [ seatSelected, setSeatSelected ] = useState([]);
+    const [ nameH, setNameH] = useState ({});
     
     const navigate = useNavigate();  
 
@@ -23,6 +24,8 @@ export default function Seats({setTicket}) {
             setSeat(response.data)
             setMovie(response.data.movie)
             setDay(response.data.day)
+            setNameH(response.data.name)
+          console.log(setNameH);
         });
         promise.catch((error) => console.log(error))
     }, []) 
@@ -58,7 +61,9 @@ export default function Seats({setTicket}) {
             day: day.date,
             title: movie.title,
             weekday: day.weekday,
+            nameH: day.name,
         }
+        console.log(ticket)
         const promise = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', body);
         promise.then (() => {
             if(seatSelected.length !== 0) {

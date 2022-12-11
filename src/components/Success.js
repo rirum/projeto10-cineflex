@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Success(ticket, setTicket) {
+export default function Success({ticket, setTicket}) {
     const navigate = useNavigate();
     function returnHome(){
         navigate("/");
@@ -19,10 +19,14 @@ export default function Success(ticket, setTicket) {
         </MovieInfo>
         <SeatsInfo data-test="seats-info">
         <h1>Ingressos:</h1>
+        {ticket.ids.map((elemento) =><p key={elemento}> Assento {elemento} </p>)}
+        
         </SeatsInfo>
 
         <ClientInfo data-test="client-info">
         <h1>Comprador:</h1> 
+        <p>{`Nome:${ticket.name}`}</p>
+        <p>{`CPF:${ticket.cpf}`}</p>
         </ClientInfo>
 
         <BackButton data-test="go-home-btn" onClick={returnHome}>
