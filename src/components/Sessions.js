@@ -37,8 +37,8 @@ export default function Sessions(){
                 <ContainerHour>
              { 
                 day.showtimes.map(showTime => (
-                    <Link to={`/assentos/${showTime.id}`} data-test="showtime" style={{ textDecoration: 'none' }}>
-                        <HourSession key={showTime.id}><p> { showTime.name } </p> </HourSession>
+                    <Link to={`/assentos/${showTime.id}`} style={{ textDecoration: 'none' }}>
+                        <HourSession key={showTime.id}><p data-test="showtime"> { showTime.name } </p> </HourSession>
                     </Link>
                 )) 
              }

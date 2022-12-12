@@ -14,19 +14,19 @@ export default function Seats({ticket, setTicket}) {
     const [ movie, setMovie ] = useState ({});
     const [ day, setDay ] = useState ({});
     const [ seatSelected, setSeatSelected ] = useState([]);
-    const [ nameH, setNameH] = useState ({});
+    const [ seatSelectedIds, setSeatSelectedIds ] = useState([]);
+    const [ hour, setHour ] = useState('');
     
     const navigate = useNavigate();  
 
     useEffect(() => {        
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
         promise.then((response) => {
+            setHour(response.data.name)
             setSeat(response.data)
             setMovie(response.data.movie)
             setDay(response.data.day)
-            setNameH(response.data.name)
-          console.log(setNameH);
-        });
+            });
         promise.catch((error) => console.log(error))
     }, []) 
 
@@ -36,24 +36,28 @@ export default function Seats({ticket, setTicket}) {
 
     function selected (id, assento) {
         let array = []
-        if(!seatSelected.includes(id) && assento) {
-                const newArray = seatSelected.filter((element) => element !== id)
-                setSeatSelected(newArray)
-                
-        } else if (!seatSelected.includes(id)) {
-            array = [...seatSelected, id]
+        if (seatSelected.includes(assento)){
+            const newArray = seatSelected.filter((element) => element.id !== id)
+            setSeatSelected(newArray)
+            
+        } else {
+           
+            array = [...seatSelected, assento]
             setSeatSelected(array);
-            console.log(array);
+            
         }
-        if (assento === true) {
-            alert("Esse assento não está disponível")
-        }
+        
+     
     }
 
+    
     function buyTickets(e){
         e.preventDefault();
-        const body = { ids:seatSelected, name: name, cpf: cpf };
-        console.log(body);
+        const arrayIds = [];
+        seatSelected.map((seat) => arrayIds.push(seat.id));
+        setSeatSelectedIds(arrayIds);
+        const body = { ids:seatSelectedIds, name: name, cpf: cpf };
+     
         const ticket = {
             ids:seatSelected,
             name: name,
@@ -61,21 +65,21 @@ export default function Seats({ticket, setTicket}) {
             day: day.date,
             title: movie.title,
             weekday: day.weekday,
-            nameH: day.name,
-        }
-        console.log(ticket)
+            hour: hour,
+          }
+       
         const promise = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', body);
         promise.then (() => {
             if(seatSelected.length !== 0) {
                 navigate('/sucesso');
                 setTicket(ticket);
-                console.log(ticket + 'ticket');
+              
             } else {
                 alert("Você não escolheu um assento")
             }
         })
         promise.catch('Erro na requisição');
-        console.log('buy tickets');
+        
     }
 
  
@@ -84,17 +88,18 @@ export default function Seats({ticket, setTicket}) {
         <StyledText>
             Selecione o(s) assento(s)
         </StyledText>
+        
             <ContainerSeats>
             {
                 seat.seats.map((assento, id) => (
                     <StyledSeats 
-                    active={seatSelected.includes(assento.id)}
+                    active={seatSelected.includes(assento)}
                     corAssento={assento.isAvailable}
                     key={assento.name}
                     name={assento.name} 
                     id={id+1}
                     data-test="seat" 
-                    onClick={() => assento.isAvailable ? selected(assento.id) : alert("Esse assento não está disponível")}
+                    onClick={() => assento.isAvailable ? selected(assento.id, assento) : alert("Esse assento não está disponível")}
                     seatSelected={seatSelected}
                     className={assento.isAvailable ? 'unavailable' : 'available'}> { assento.name } </StyledSeats>
                 ))                

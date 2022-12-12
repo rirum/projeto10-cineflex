@@ -12,14 +12,16 @@ export default function Success({ticket, setTicket}) {
         <StyledText>
             Pedido feito com sucesso!
         </StyledText>
+
         <MovieInfo data-test="movie-info">
             <h1>Fonte e Sessão:</h1>
             <p>{ticket.title}</p>
-            <p>{ticket.weekday} - {ticket.day}</p>
+            <p>{ticket.day} {ticket.hour}</p>
         </MovieInfo>
+       
         <SeatsInfo data-test="seats-info">
         <h1>Ingressos:</h1>
-        {ticket.ids.map((elemento) =><p key={elemento}> Assento {elemento} </p>)}
+        {ticket.ids.map((elemento) =><p key={elemento.id}> Assento {elemento.name} </p>)}
         
         </SeatsInfo>
 
@@ -40,6 +42,7 @@ export default function Success({ticket, setTicket}) {
 const HomeContainer = styled.div`
 align-items: center;
 background-color: #E5E5E5;
+height: 800px;
  
 `
 const StyledText = styled.div`
@@ -56,28 +59,37 @@ const MovieInfo = styled.div`
 font-family: 'Roboto', sans-serif;
 width: 374px;
 height: 110px;
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+justify-content: center;
+
 h1{
     color: #293845;
     font-weight: 700;
     font-size: 24px;
+    margin-bottom: 5px;
 }
 p{
     color: #293845;
     font-size: 22px;
+    margin-bottom:5px;
 }
 `
 const SeatsInfo = styled.div`
 font-family: 'Roboto', sans-serif;
 width: 374px;
-height: 110px;
+margin: 0 auto;
 h1{
     color: #293845;
     font-weight: 700;
     font-size: 24px;
+    margin-bottom: 30px;
 }
 p{
     color: #293845;
     font-size: 22px;
+    margin-bottom: 5px;
 }
 `
 
@@ -85,14 +97,17 @@ const ClientInfo = styled.div`
 font-family: 'Roboto', sans-serif;
 width: 374px;
 height: 110px;
+margin: 0 auto;
 h1{
     color: #293845;
     font-weight: 700;
     font-size: 24px;
+    margin-bottom: 5px;
 }
 p{
     color: #293845;
     font-size: 22px;
+    margin-bottom: 5px;
 }
 `
 
